@@ -1,18 +1,13 @@
 // do not remove, allowes autocomplete
 /// <reference path="./../p5.global-mode.d.ts" />
 
-var Pacman = function(x, y, leva, prava, horni, dolni, barva) {
-    this.poziceX = x || (window.innerWidth+1)/4;
+var ham = 15;
+var pant = 0;
+var Pacman = function(x, y) {
+    this.poziceX = x || (window.innerWidth+1)/2;
     this.poziceY = y || (window.innerHeight-3)/2;
-    this.left = leva || LEFT_ARROW;
-    this.right = prava || RIGHT_ARROW;
-    this.up = horni || UP_ARROW;
-    this.down = dolni || DOWN_ARROW;
-    this.color = barva || "red";
     this.pohybV = 0;
     this.pohybH = 0;
-    this.ham = 15;
-    this.pant = 0;
     this.draw = function() {
       push();
       translate(this.poziceX, this.poziceY);
@@ -66,8 +61,7 @@ var Pacman = function(x, y, leva, prava, horni, dolni, barva) {
         rotate(1.875 * PI);
         }
 
-  fill(this.color);  
-        arc(0, 0, 50, 50, 15/this.ham, - (15/this.ham) + 2.325 * PI, PIE);
+      arc(0, 0, 50, 50, 15/ham, - (15/ham) + 2.325 * PI, PIE);
       pop();
     };
     this.move = function() {
@@ -81,45 +75,28 @@ var Pacman = function(x, y, leva, prava, horni, dolni, barva) {
       }
     };
     this.steer = function() {
-      if (keyCode === this.up) {
+      if (keyCode === UP_ARROW) {
         this.pohybV = this.pohybV - 2;
         if (this.pohybV < -4)  {
           this.pohybV = -4;
         };
-      } else if (keyCode === this.down) {
+      } else if (keyCode === DOWN_ARROW) {
         this.pohybV = this.pohybV + 2;
         if (this.pohybV > 4)  {
           this.pohybV = 4;
         };
-      }else if (keyCode === this.left) {
+      }else if (keyCode === LEFT_ARROW) {
         this.pohybH = this.pohybH - 2;
         if (this.pohybH < -4)  {
           this.pohybH = -4;
         };
-      }else if (keyCode === this.right) {
+      }else if (keyCode === RIGHT_ARROW) {
         this.pohybH = this.pohybH + 2;
         if (this.pohybH > 4)  {
           this.pohybH = 4;
         };
       };
     };
-    this.pusa = function() {
-      if (this.ham == 30) {
-        this.pant = 1;
-        }
-        else if (this.ham == 10) {
-        this.pant = 0;
-        }
-        else {
-      };
-      
-      if (this.pant == 1) {
-        this.ham = this.ham - 1;
-          }
-        else {
-        this.ham = this.ham + 1;
-        };
-      };
   };
 
 
@@ -128,12 +105,15 @@ function setup() {
   // put setup code here
 
   Pacman1 = new Pacman();
-  Pacman2 = new Pacman((window.innerWidth+1)*3/4, (window.innerHeight-3)/2, 65, 68, 87, 83, "green");
+  Pacman2 = new Pacman(100, 100);
 }
+
+
 
 function draw() {
   background (255,255,0,80);
   stroke(0,0,0);
+  fill(255,0,0);
 
   Pacman1.draw();
   Pacman2.draw();
@@ -141,15 +121,30 @@ function draw() {
   Pacman1.move();
   Pacman2.move();
 
-  Pacman1.pusa();
-  Pacman2.pusa();
 
-  if (Math.abs(Pacman1.poziceX % window.innerWidth - Pacman2.poziceX % window.innerWidth) < 50 && Math.abs(Pacman1.poziceY % (window.innerHeight-4) - Pacman2.poziceY % (window.innerHeight-4)) < 50){
-    console.log("bum");
-  };
+  pusa();
+  if (pant == 1) {
+ham = ham - 1;
+  }
+else {
+ham = ham + 1;
+
+  }
 
   // put drawing code here
 }
+
+
+
+function pusa () {
+if (ham == 30) {
+  pant = 1;
+}
+else if (ham == 10) {
+  pant = 0;
+}
+}
+
 
 function keyPressed() {
   Pacman1.steer();
