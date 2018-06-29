@@ -3,6 +3,12 @@ var count = 5;
 var rozmer = 60;
 var kolo = 40;
 
+//function setup() {
+  //createCanvas(400, 400);
+  //angleMode(DEGREES);
+  //strokeWeight(1);
+//}
+
 function praveokno () {
 	turtle.left(kolo);
 	turtle.forward(rozmer*kolo/360);
