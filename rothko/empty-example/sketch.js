@@ -145,7 +145,8 @@ function draw() {
   Pacman2.pusa();
 
   if (Math.abs(Pacman1.poziceX % window.innerWidth - Pacman2.poziceX % window.innerWidth) < 50 && Math.abs(Pacman1.poziceY % (window.innerHeight-4) - Pacman2.poziceY % (window.innerHeight-4)) < 50){
-    console.log("bum");
+    alert("GAME OVER");
+    document.location.reload();
   };
 
   // put drawing code here
