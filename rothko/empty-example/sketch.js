@@ -1,5 +1,6 @@
 // do not remove, allowes autocomplete
 /// <reference path="./../p5.global-mode.d.ts" />
+var gameOver = false;
 
 var Pacman = function(x, y, leva, prava, horni, dolni, barva) {
     this.poziceX = x || (window.innerWidth+1)/4;
@@ -132,7 +133,8 @@ function setup() {
 }
 
 function draw() {
-  background (255,255,0,80);
+  if (!gameOver) {
+    background (255,255,0,80);
   stroke(0,0,0);
 
   Pacman1.draw();
@@ -143,14 +145,27 @@ function draw() {
 
   Pacman1.pusa();
   Pacman2.pusa();
+  
+if (Math.abs(Pacman1.poziceX % window.innerWidth - Pacman2.poziceX % window.innerWidth) < 50 && Math.abs(Pacman1.poziceY % (window.innerHeight-4) - Pacman2.poziceY % (window.innerHeight-4)) < 50){
+  alert("KONEC HRY");
+  gameOver=true;
+  document.location.reload();
+};
 
-  if (Math.abs(Pacman1.poziceX % window.innerWidth - Pacman2.poziceX % window.innerWidth) < 50 && Math.abs(Pacman1.poziceY % (window.innerHeight-4) - Pacman2.poziceY % (window.innerHeight-4)) < 50){
-    alert("GAME OVER");
-    document.location.reload();
-  };
+  }
+
+  
+
+  //if (Math.abs(Pacman1.poziceX % window.innerWidth - Pacman2.poziceX % window.innerWidth) < 50 && Math.abs(Pacman1.poziceY % (window.innerHeight-4) - Pacman2.poziceY % (window.innerHeight-4)) < 50){
+  //  alert("KONEC HRY");
+  //  document.location.reload();
+  //};
 
   // put drawing code here
 }
+
+
+
 
 function keyPressed() {
   Pacman1.steer();
